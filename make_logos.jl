@@ -1,3 +1,4 @@
+using Pkg; Pkg.activate(".")
 using Luxor, Colors
 
 function chemellia_old(loc::Point, size::Real; petalcolor="plum3", period=16pi, step=0.5)
