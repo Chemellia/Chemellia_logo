@@ -54,65 +54,29 @@ function bee(loc::Point, size::Real; aspect=1.6, angle=0)
     ellipse(f1, f3, 0.3*size, :fill)
 end
 
-configs = [Dict("font"=>"Josefin Sans Semibold", "fontsize"=>110,
-                "beecoords"=>(217,-115), "name"=>"josefin"),
-           Dict("font"=>"Amaranth Regular", "fontsize"=>120,
-                "beecoords"=>(213,-124 ), "name"=>"amaranth"),
-           Dict("font"=>"Arima Madurai Bold", "fontsize"=>120,
-                "beecoords"=>(241,-139), "name"=>"arima"),
-            ]
+# size in inches
+function make_squarelogo(fname="squarelogo.png", size=1.5, dpi=300)
+    np = size * dpi
+    Drawing(np, np, fname)
+    origin()
+    sethue("olivedrab")
+    setline(0.75) # scale this?
+    squircle(O, 0.48*np, 0.48*np, :fill, rt = 0.3)
+    chemellia(O + Point(0.5*np, 0.5*np), size=0.22*np)
+    finish()
+end
 
-config = configs[1]
-
-Drawing(500, 500, "./squarelogo.png")    
-origin()
-sethue("olivedrab")
-setline(0.75)
-squircle(O, 240, 240, :fill, rt = 0.3)
-chemellia(O + Point(250, 250), size=110)
-finish()
-
-Drawing(800,  320, "./biglogo.png")    
-origin()
-fontface(config["font"])
-fontsize(config["fontsize"])
-setcolor("olivedrab")
-text("Chemellia", Point(-180,0), valign=:middle)
-bee(Point(config["beecoords"]...), 20, aspect=1.5, angle=π/8)
-chemellia(Point(110,160),size=45)
-finish()
-
-# for config in configs
-#     for bgd in ["white","black"]
-#         Drawing(800,  320, "./samples/biglogo/$(config["name"])_$bgd.png")    
-#         origin()
-#         background(bgd)
-#         fontface(config["font"])
-#         fontsize(config["fontsize"])
-#         setcolor("olivedrab")
-#         text("Chemellia", Point(-180,0), valign=:middle)
-#         bee(Point(config["beecoords"]...), 20, aspect=1.5, angle=π/8)
-#         chemellia(Point(110,160),size=45)
-#         finish()
-#     end
-# end
-
-# for bgd in ["white","black"]
-#     Drawing(500, 500, "./samples/littlebox/on$bgd.png")    
-#     origin()
-#     background(bgd)
-#     sethue("olivedrab")
-#     setline(0.75)
-#     squircle(O, 240, 240, :fill, rt = 0.3)
-#     chemellia(O+Point(250,250),size=110)
-#     finish()
-# end
-
-# @draw begin
-#     origin()
-#     background("white")
-#     sethue("olivedrab")
-#     setline(0.75)
-#     squircle(O, 240, 240, :fill, rt = 0.3)
-#     chemellia(O+Point(300,300),size=110)
-# end
+#TODO: bee positioning is still off when sizes/filetypes change
+function make_biglogo(fname="./biglogo.eps", width=4.875, dpi=300)
+    np_w = round(width * dpi)
+    np_h = round(np_w / 3.25)
+    Drawing(np_w, np_h, fname)
+    origin()
+    fontface("Josefin Sans Semibold")
+    fontsize((11.0/80) * np_w)
+    setcolor("olivedrab")
+    text("Chemellia", Point(-.23*np_w,0), valign=:middle)
+    bee(Point(0.266*np_w, -0.458*np_h), 0.024*np_w, aspect=1.5, angle=π/8)
+    chemellia(Point(0.1375*np_w, 0.5*np_h), size=0.0563*np_w)
+    finish()
+end
