@@ -66,7 +66,6 @@ function make_squarelogo(fname="squarelogo.png", size=1.5, dpi=300)
     finish()
 end
 
-#TODO: bee positioning is still off when sizes/filetypes change
 function make_biglogo(fname="./biglogo.eps", width=4.875, dpi=300)
     np_w = round(width * dpi)
     np_h = round(np_w / 3.25)
@@ -80,3 +79,8 @@ function make_biglogo(fname="./biglogo.eps", width=4.875, dpi=300)
     chemellia(Point(0.1375*np_w, 0.5*np_h), size=0.0563*np_w)
     finish()
 end
+
+make_squarelogo()
+make_squarelogo("./squarelogo.eps")
+make_biglogo()
+make_biglogo("./biglogo.png")
